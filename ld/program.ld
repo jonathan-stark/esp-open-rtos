@@ -22,7 +22,7 @@ pvPortMalloc = malloc;
 vPortFree = free;
 
 /* SDK compatibility */
-ets_printf = printf;
+/* ets_printf = printf; */
 
 PHDRS
 {
