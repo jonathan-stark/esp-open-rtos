@@ -178,7 +178,9 @@ size_t ooseq_bytes_limit(struct tcp_pcb *pcb)
         ooseq_blen += p->tot_len;
     }
 
+    uint32_t malloc_mask = set_malloc_regions(MALLOC_MASK_DRAM);
     size_t free = xPortGetFreeHeapSize();
+    set_malloc_regions(malloc_mask);
     ssize_t target = ((ssize_t)free - 8000) + ooseq_blen;
 
     if (target < 0) {
@@ -365,7 +367,7 @@ ethernetif_init(struct netif *netif)
     /* Initialize interface hostname */
     char *hostname = NULL;
     /* Disabled for now as there were reports of crashes here, sysparam issues */
-    /* sysparam_get_string("hostname", &hostname); */
+    /* sysparam_get_string("wificfg", "hostname", &hostname); */
     if (hostname && strlen(hostname) == 0) {
         free(hostname);
         hostname = NULL;
